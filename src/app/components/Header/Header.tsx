@@ -1,104 +1,79 @@
 "use client";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import React from "react";
 import Link from "next/link";
-import { CiMenuFries } from "react-icons/ci";
+import { useState } from "react";
+import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const Header = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
 
-  const menuItems = [
-    {
-      name: "Home",
-      href: "#",
-    },
-    {
-      name: "Destinations",
-      href: "#",
-    },
-    {
-      name: "Adventure Activities",
-      href: "#",
-    },
-    {
-      name: "Travel Tips",
-      href: "#",
-    },
-
-    {
-      name: "About Us",
-      href: "#",
-    },
-    {
-      name: "Contact Us",
-      href: "#",
-    },
-  ];
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
   return (
-    <nav className="bg-[#e35336] top-0 z-10 ">
-      <div className="flex  flex-wrap  items-center  justify-between  p-4 w-7xl mx-auto">
-        <h1 className="text-2xl  font-bold italic ">RoverRoutes</h1>
+    <header className="flex  bg-[#ED7014] justify-between h-20 p-4 items-center ">
+      <button title="button" onClick={toggleMenu}>
+        {!isOpen ? (
+          <IoMdMenu size={20} className="md:hidden lg:hidden block " />
+        ) : (
+          <RxCross2 size={20} className="md:hidden lg:hidden block " />
+        )}
+      </button>
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold italic mr-20  ">
+        RoverRoutes
+      </h1>
+      <nav className="hidden md:flex lg:flex flex-grow justify-center">
+        <ul className="text-2xl flex flex-row justify-center gap-14 font-semibold italic  ">
+          <li>
+            <Link href="#">Home</Link>
+          </li>
+          <li>
+            <Link href="#">Destinations</Link>
+          </li>
+          <li>
+            <Link href="/#">Advanture Activities</Link>
+  
+          </li>
+          <li>
+            <Link href="/contact">Contact</Link>
+          </li>
+        </ul>
+      </nav>
 
-        {/*Menu Icons */}
-
-        <div className="md:hidden ">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "close menu" : "open menu"}
-            className="focus:outline-none"
-          >
-            {isOpen ? (
-              <RxCross2 size={20} className="text-black  " />
-            ) : (
-              <CiMenuFries size={20} className="text-black " />
-            )}
-          </button>
-        </div>
-
-        {/* Pc Menu*/}
-        <div className=" hidden md:flex  text-lg gap-4 ">
-          {menuItems.map((items, index) => (
-            <Link
-              href={items.href}
-              key={index}
-              className={`${items.href === pathname ? "bg-white" : "text-black"}
-                          p-3 rounded-md hover:underline hover:scale-95 transition-transform `}
-            >
-              {items.name}
-            </Link>
-          ))}
-        </div>
-        <div className="hidden md:block">
+      <div className="hidden md:block lg:block">
           <button className="bg-orange-400 text-black font-semibold italic text-center py-2 px-4 rounded-lg hover:bg-orange-500">
             Book Now
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden flex flex-col bg-[#e35336] mt-2 p-4 ">
-            {menuItems.map((items, index) => (
-              <Link
-                href={items.href}
-                key={index}
-                className={`${
-                  items.href === pathname ? "bg-white" : "text-black "
-                }  p-3 rounded-md   hover:scale-95 transition-transform cursor-pointer hover:underline  `}
-                onClick={() => setIsOpen(false)}
-              >
-                {items.name}
-              </Link>
-            ))}
-            <button className="bg-orange-400 hover:bg-orange-500 text-black font-semibold italic text-center px-4 py-2 rounded-lg cursor-pointer">
+      {isOpen && (
+        <nav className="md:hidden lg:hidden absolute top-20 left-0 w-full">
+          <ul className="flex flex-col font-semibold gap-4 p-4  bg-pink-200 w-full absolute    rounded-lg shadow-lg ">
+            <li>
+              <Link href="#">Home</Link>
+            </li>
+            <li>
+              <Link href="/#" >Destinations</Link>
+            </li>
+            <li>
+              <Link href="/about">Advanture Activities</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+            <button className="bg-orange-400 hover:bg-orange-500 text-black block  md:hidden lg:hidden font-semibold italic text-center px-4 py-2 rounded-lg cursor-pointer">
               Book Now
             </button>
-          </div>
-        )}
-      </div>
-    </nav>
+          </ul>
+          
+        </nav>
+      )}
+
+            
+          
+    </header>
   );
 };
 
-export default Header;
+export default Navbar;
